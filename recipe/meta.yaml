@@ -11,7 +11,7 @@ source:
   sha256: aa9f0e6043c5ecdea07a155049439e993693d9d5b1e978d593049d6eb7154a70
 
 build:
-  number: 4
+  number: 5
   entry_points:
     - make_arq = make_arq.make_arq:main
   script: {{ PYTHON }} -m pip install . -vv
