@@ -4,29 +4,32 @@
 
 package:
   name: {{ name|lower }}
-  version: {{ version }}
+  version: "{{ version }}"
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/make_arq-{{ version }}.tar.gz
+  url: https://files.pythonhosted.org/packages/source/{{ name[0] }}/{{ name }}/make_arq-{{ version }}.tar.gz
   sha256: aa9f0e6043c5ecdea07a155049439e993693d9d5b1e978d593049d6eb7154a70
+  patches:
+    - numpy2.patch
 
 build:
-  number: 4
+  number: 5
   entry_points:
     - make_arq = make_arq.make_arq:main
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
   host:
     - numpy
     - pip
     - python
+    - setuptools
   run:
     - python
     - tifffile
-    - {{ pin_compatible('numpy') }}
 
 test:
   imports:
