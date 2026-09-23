@@ -1,0 +1,33 @@
+Build against NumPy 2: fix incompatible pointer types (GCC 14) and drop numpy<2 pin
+
+--- a/setup.py
++++ b/setup.py
+@@ -27,7 +27,7 @@
+         "Programming Language :: Python :: Implementation :: CPython",
+     ],
+     install_requires=[
+-        "numpy >=1.10,<2",
++        "numpy >=1.10",
+         "tifffile",
+     ],
+     extras_require={
+--- a/src/make_arq/_makearq.c
++++ b/src/make_arq/_makearq.c
+@@ -28,7 +28,7 @@
+     int width, height, offset;
+     int factor, rowstart, colstart;
+     char* filename;
+-    PyObject* data;
++    PyArrayObject* data;
+     FILE* src;
+     int r_off, c_off;
+     int is_dng;
+@@ -96,7 +96,7 @@
+ static PyObject* get_fuji_frame_data(PyObject* self, PyObject* args)
+ {
+     int factor, rowstart, colstart;
+-    PyObject *data, *im;
++    PyArrayObject *data, *im;
+     int r_off, c_off;
+     int width, height;
+     int is_dng;
